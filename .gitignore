@@ -24,3 +24,10 @@ proguard/
 
 # Log Files
 *.log
+
+
+# Front end stuff
+*.DS_Store
+node_modules/*
+.public/*
+bower_components/*
