@@ -1,4 +1,6 @@
 //mapParser.js
+// BAD: Never use Globals, except in hackathons!
+var PATH = "../data/";
 
 var MapParser = function(mapid, data) {
   this.googleMap = "";
@@ -24,14 +26,14 @@ var MapParser = function(mapid, data) {
     }
   ];
 
-  this.callSome = function() {
-    console.log(mapid);
-  };
+  this.thoughtSpots = [];
+
   this.initialize = function() {
   //   /*43.7000° N, 79.4000° W
   //   */
-  //
-    var mapOptions = {
+
+
+  var mapOptions = {
       center: {
         lat: 43.653921,
         lng: -79.373217
@@ -45,87 +47,165 @@ var MapParser = function(mapid, data) {
       // streetViewControl: true,
       // overviewMapControl: true
     };
+
     googleMap = new google.maps.Map(document.getElementById(mapid),
         mapOptions);
+
+    centerMapToUser(googleMap);
   };
 
-  this.centerTo = function(clat,clng) {
+  this.markers = [];
 
-    //googleMap.setCenter({lat: clat,lng:clng});
-
-    if (navigator.geolocation) {
-      var initialLocation;
-      // navigator.geolocation.getCurrentPosition(function (position) {
-      //    initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      //    googleMap.setCenter(initialLocation);
-         var marker = new google.maps.Marker({
-            map: googleMap,
-            draggable: false,
-            position: initialLocation
-          });
-         googleMap.setZoom(18);
-      //});
-   }
+  this.callSome = function() {
+    console.log(mapid);
   };
 
-  this.getCurrentPosition = function() {
-    var initialLocation;
-    navigator.geolocation.getCurrentPosition(function (position) {
-      initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  this.limitByTitle = function(title) {
+    var mapRef = this;
+    if(mapRef.markers.length > 0) {
+      console.log("Title: ", title);
+    }
+
+    // if(thoughtSpots.length > 0) {
+    //   var spot = thoughtSpots[1];
+    //   console.log(spot);
+    //   console.log(spot["City"]);
+    // }
+    //for()
+    // for(var i = 0; i < thoughtSpots.length; i++) {
+    //   var spot = thoughtSpots[i];
+    //   console.log(spot);
+    //   if(spot['City'].match(title) !== null) {
+    //     mapRef.thoughtSpots.splice(i);
+    //   }
+    // }
+    thoughtSpots.forEach(function(val, index, arr) {
+      if(val['City'] == title)
+        arr.splice(index);
     });
-    return initialLocation;
+    console.log(thoughtSpots.length);
+
+
+    // mapRef.markers.forEach(function(value, index, arr) {
+    //   // if(mapRef.markers[index]['City'].match(title) !== null) {
+    //   //   mapRef.markers.splice(index);
+    //   // }
+    // });
+
+    //console.log("sddsa");
   };
 
   this.checkJquery = function() {
     console.log($('#map'));
   };
 
-  this.importJson = function() {
+  this.importJson = function(obj) {
     console.log("calling import");
-    var PATH = "../data/";
+    var mapRef = this;
     // $.getJSON( PATH + "thoughtSpots.json", function( data ) {
     $.getJSON( PATH + "sample.json", function( data ) {
-      console.log("Size: ", data.length);
+      //console.log("Size: ", data.length);
+      //console.log(data[0]);
+      data.forEach( function(location) {
+        //console.log(location);
 
-        data.forEach( function(location) {
-
-          var marker = new google.maps.Marker({
-            map: googleMap,
-            draggable: true,
-            position: new google.maps.LatLng(location.LATITUDE, location.LONGITUDE)
-          });
-          google.maps.event.addListener(marker, 'dblclick', function() {
-            googleMap.setZoom(14);
-            googleMap.setCenter(marker.getPosition());
-          });
-          console.log(marker.getPosition());
+        var marker = new google.maps.Marker({
+          map: googleMap,
+          draggable: true,
+          position: new google.maps.LatLng(location.LATITUDE, location.LONGITUDE)
         });
 
-  //         // display station name when clicked
-  //         google.maps.event.addListener(marker, 'click', function(){
-  //           infoWindow.setContent(station["Station Name"]);
-  //           infoWindow.open(map, this);
-  //           //map.fitBounds(bounds);
-  //         });
+        marker.locMarkerId = location['#'];
 
-          // recenter map to the marker which was clicked
+        mapRef.markers.push(marker);
+        //mapRef.thoughtSpots.push(location);
 
+        google.maps.event.addListener(marker, 'dblclick', function() {
+          googleMap.setZoom(14);
+          googleMap.setCenter(marker.getPosition());
+        });
+          //console.log(marker.getPosition());
+    });
+        mapRef.sortDateSets();
 
-  //       });
     });
   };
 
+  this.sortDateSets = function() {
+    var mapRef = this;
+    mapRef.markers.sort(function(a,b) {
+      // if(a.locMarkerId > b.locMarkerId) {
+      return a.locMarkerId - b.locMarkerId;
+      // }
+    });
+
+  };
 };
 
-// function initialize() {
-//   /*43.7000° N, 79.4000° W
-//   */
-//   var mapOptions = {
-//     center: { lat: 43.653921, lng: -79.373217},
-//     // center: new google.maps.LatLng(43.653921, -79.373217)
-//     zoom: 15
-//   };
-//   var map = new google.maps.Map(document.getElementById('map-canvas'),
-//       mapOptions);
-// }
-// google.maps.event.addDomListener(window, 'load', initialize);
+// Centers the map to user's current location when loaded initially
+window.centerMapToUser = function(locObj) {
+    //var mapRef = obj;
+    //console.log("MAP_REF:",mapRef);
+    navigator.geolocation.getCurrentPosition(function (position) {
+      var initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+      var marker = new google.maps.Marker({
+          map: locObj,
+          draggable: false,
+          position: initialLocation
+      });
+      //mapRef.markers.push(marker);
+      locObj.setCenter(initialLocation);
+    });
+
+};
+
+
+function submitSearch() {
+  var term = $('#searchBox').val();
+
+  // Public Name
+  // var publicName = "Public Name";
+  // mp.limitByTitle(term);
+  //mp.markers = [];
+  console.log("Spots", term);
+  mp.limitByTitle(term);
+
+}
+
+$(window).load(function() {
+  //console.log("SDf",document.getElementById('searchBoxTerm'));
+  $('#searchBox').keypress(function() {
+    var term = $(this).val();
+    if(term.length > 2) {
+      console.log("Term: " + term);
+      //mp.limitByTitle(term);
+    }
+    //mp.limitByTitle("dfds");
+  });
+
+  $.getJSON( PATH + "sample.json", function( data ) {
+      console.log("Size: ", data.length);
+      //console.log(data[0]);
+      window.thoughtSpots = data;
+  });
+  thoughtSpots.sort(function(a,b) {
+    return a['#'] - b['#'];
+  });
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

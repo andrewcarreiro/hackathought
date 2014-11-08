@@ -11,16 +11,27 @@
   <button onclick="centerHere()">Click</button>
   <button id="info-panel-spawn">animate infopanel in</button>
 </div>
+<input type="submit" id="searchBtn" style="position: absolute; top: 15px; right: 50px;" onclick="submitSearch()"/>
+
+
+
 
 <%- partial('partials/info-panel') %>
 
 <script>
 var my_important_json = {'json' : 'cool'};
 var mp = new MapParser('map',my_important_json);
-function centerHere() {
-  mp.centerTo(mp.getCurrentPosition());
-}
-mp.importJson();
-google.maps.event.addDomListener(window, 'load', mp.initialize);
+var thoughtSpots = [];
 
+function centerHere() {
+  // Centers the position to current user location
+  mp.centerMapToUser();
+}
+
+
+
+mp.importJson();
+mp.limitByTitle("Sdfsd");
+google.maps.event.addDomListener(window, 'load', mp.initialize);
+//google.maps.event.addDomListener(window, 'load', mp.c);
 </script>
