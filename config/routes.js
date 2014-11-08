@@ -34,6 +34,9 @@ module.exports.routes = {
 
   '/': {
     view: 'home'
+  },
+  'get /thoughtspot/foo' : {
+    view : 'thoughtspot/single'
   }
 
   /***************************************************************************
