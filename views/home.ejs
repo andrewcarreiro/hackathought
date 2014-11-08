@@ -14,10 +14,16 @@
 
 <div class="info-panel" id="info-panel">
   <div class="top">
-
+    <div class="icon headericon icon-family"></div>
+    <h2>Place Name</h2>
+    <h3>123 Fake Street, Toronto, ON M6H 3W3</h3>
+    <div class="bot">
+      Useful for: {THING 1}
+    </div>
   </div>
-
+  <div class="closer"></div>
   <div class="bottom">
+    <!--
     <div class="icon icon-culture">culture</div>
     <div class="icon icon-family">family</div>
     <div class="icon icon-health">health</div>
@@ -25,6 +31,8 @@
     <div class="icon icon-relationships">relationships</div>
     <div class="icon icon-spirituality">spirituality</div>
     <div class="icon icon-work">work</div>
+    -->
+
   </div>
 </div>
 
@@ -38,5 +46,13 @@ mp.importJson();
 google.maps.event.addDomListener(window, 'load', mp.initialize);
 
 var infopanel = new InfoPanel("info-panel");
+$(document).ready(function(){
+  $("#info-panel-spawn").on('click', function(){
+    infopanel.open();
+  })
+});
+</script>
+
+<script type="text/tmpl">
 
 </script>
