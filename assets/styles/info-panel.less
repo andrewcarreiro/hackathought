@@ -9,19 +9,22 @@
   overflow: hidden;
   &.primer{display:block;}
 
-  .top,.bottom{
-    background:#FFF;
+  .top,.content{
     position:absolute;
     width:100%;
     transition:300ms top ease-in-out;
     -webkit-transition:300ms top ease-in-out;
     overflow:hidden;
   }
+
+  .top,.bottom{
+    background:#FFF;
+  }
   .closer{
-    top:10%;
-    height:30%;
-    position:absolute;
-    width:100%;
+    height:150px;
+  }
+
+  .bottom{
   }
 
   .top{
@@ -31,10 +34,10 @@
   }
   &.active .top{top:0%;}
 
-  .bottom{
+  .content{
     overflow:hidden;
-    height:60%;
+    height:90%;
     top:100%;
   }
-  &.active .bottom{top:40%;}
+  &.active .content{top:10%;}
 }
