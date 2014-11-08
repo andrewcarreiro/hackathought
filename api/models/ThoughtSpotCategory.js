@@ -8,7 +8,14 @@
 module.exports = {
 
   attributes: {
-
+    thoughtspot_id : {
+      type : 'integer',
+      required : true
+    },
+    category_id : {
+      type : 'integer',
+      required : true
+    }
   }
 };
 

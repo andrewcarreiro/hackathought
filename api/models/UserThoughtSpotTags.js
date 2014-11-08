@@ -8,7 +8,9 @@
 module.exports = {
 
   attributes: {
-
+    user_id : 'integer',
+    thoughtspot_id : 'integer',
+    tag_id : 'integer'
   }
 };
 
