@@ -7,13 +7,16 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=visualization,places"></script>
 <div id="map" style="height: 100%; margin: 0; padding: 0; background:#222">map map</div>
 
-<div style="position: absolute; top: 15px; right: 180px;">
-  <input id="searchBox" type="text"/>
+<div id="search" style="position: absolute; top: 15px; right: 50px;">
+  <button onclick="centerHere()">Click</button>
+  <button id="info-panel-spawn">animate infopanel in</button>
 </div>
 <input type="submit" id="searchBtn" style="position: absolute; top: 15px; right: 50px;" onclick="submitSearch()"/>
 
 
 
+
+<%- partial('partials/info-panel') %>
 
 <script>
 var my_important_json = {'json' : 'cool'};
