@@ -29,15 +29,18 @@
 
   .top{
     h2,h3{margin:0px;}
-    height:10%;
-    top:-10%;
+    height:100px;
+    top:-100px;
+    z-index:1;
   }
-  &.active .top{top:0%;}
+  &.active .top{top:0px;}
 
   .content{
     overflow:hidden;
-    height:90%;
+    height:100%;
+    padding-top:100px;
     top:100%;
+    box-sizing: border-box;
   }
-  &.active .content{top:10%;}
+  &.active .content{top:0px;}
 }
