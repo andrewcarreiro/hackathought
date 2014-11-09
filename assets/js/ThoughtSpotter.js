@@ -16,6 +16,7 @@ ThoughtSpotter = {
 						classes = classes.replace("Legal and Financial","legal");
 						classes = classes.split(", ");
 						thoughtSpots[i].classes = classes;
+						classes.clean("");
 
 						var tags = [];
 						tags = tags.concat( thoughtSpots[i]["Other Requirements"]);
