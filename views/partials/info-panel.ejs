@@ -11,20 +11,29 @@
 	});
 </script>
 <script id="info-panel-template" type="text/x-handlebars-template">
-	<div>
-		<div class="top culture">
+	<!--
+		Todo: not sure why this is not randomizing one of the colours
+	-->
+	<div class="<?=
+		d['classes'][(Math.floor(Math.random()*d['classes'].length))]
+	?>">
+		<div class="top normal">
 			<div class="header-image"></div>
 			<div class="header-content">
-				<h2><?= d["Public Name"] ?></h2>
-				<h3>
-					<?= d["Address 1"]+"<br/>" ?>
-					<? if (d["Address 2"]) { ?>
-						<?= d["Address 2"]+"<br/>" ?>
-					<? } ?>
-					<?= d["City"] ?><? if(d["City"] && d["Postal Code"]){ ?>,<? } ?> <?= d["Postal Code"] ?>
-				</h3>
+				<div>
+					<h2><?= d["Public Name"] ?></h2>
+					<h3>
+						<span class="icon-location"></span>
+						<?= d["Address 1"]+"<br/>" ?>
+						<? if (d["Address 2"]) { ?>
+							<?= d["Address 2"]+"<br/>" ?>
+						<? } ?>
+						<?= d["City"] ?><? if(d["City"] && d["Postal Code"]){ ?>,<? } ?> <?= d["Postal Code"] ?>
+					</h3>
+				</div>
 			</div>
 		</div>
+		<button class="closem icon-arrow-left"></button>
 		<div class="content">
 			<div>
 				<div>
@@ -36,7 +45,7 @@
 					<div class="bottom">
 						<? if ( d["DESCRIPTION"] ) { ?>
 							<section class="about">
-								<h3>About</h3>
+								<h3><span class="icon-about"></span>About</h3>
 								<div class="copy">
 									<?= d["DESCRIPTION"] ?>
 								</div>
@@ -44,7 +53,7 @@
 						<? } ?>
 						<? if ( d["Hours of Operation"] ) { ?>
 							<section class="hours">
-								<h3>Hours</h3>
+								<h3><span class="icon-hours"></span>Hours</h3>
 								<div class="copy">
 									<?
 										hours = d["Hours of Operation"].split("; ");
@@ -57,6 +66,52 @@
 								</div>
 							</section>
 						<? } ?>
+
+
+						<? if ( true ) { ?>
+							<section class="moreinfo">
+								<h3><span class="icon-dots"></span>More Information</h3>
+								<div class="copy">
+									<ul>
+									<? d["tags"].forEach(function(el) { ?>
+										<li><?= el ?></li>
+									<? }); ?>
+									</ul>
+								</div>
+							</section>
+						<? } ?>
+
+						<? if ( d["Website"] && d["Phone"] ) { ?>
+							<section class="links row">
+								<div class="col-xs-6 darker">
+									<a href="<?= d['Website'] ?>" target="_blank">
+										<strong>Visit Website</strong>
+										<?= d["Website"].replace("http://",'') ?>
+									</a>
+								</div>
+								<div class="col-xs-6 lighter">
+									<a href="tel:<?= d['Phone'] ?>">
+										<strong>Call Now</strong>
+										<?= d["Phone"] ?>
+									</a>
+								</div>
+							</section>
+						<? } ?>
+
+						<section class="comments">
+							<h3>Comments</h3>
+							<ul>
+								<li>This really helped me when I was going through a hard time.</li>
+								<li>The therapists here are really great, I’m happy I got a chance to seek treatment here. Dr. Dude was really helpful and great at what he does</li>
+							</ul>
+						</section>
+
+						<div class="row">
+							<button class="feedback">
+								<span>Help Us Make Thoughtspot Better</span>
+								<strong>Give Feedback on this Spot</strong>
+							</button>
+						</div>
 
 					</div>
 				</div>

@@ -1,0 +1,76 @@
+<html>
+<head>
+	<title>home test</title>
+	<style>
+
+	body {
+  margin: 5%;
+}
+
+	.category_button{
+		position: absolute;
+		right: 0;
+		bottom: 0;
+
+	}
+
+	#catagory_button_show{
+		display: ;
+	}
+
+	ul li{
+		list-style-type: none;
+	}
+
+	.hidden{
+		display: none;
+		position: absolute;
+		right: 0;
+		bottom: 0;
+	}
+
+	.catfade{
+		position:relative;
+		/*-webkit-transition-duration: 0.8s;*/
+	}
+
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+
+<div class="main">
+
+<!-- 	<div class="category_button">
+		<ul id="cat_items" style="padding-left: 0; margin-left: 0">
+			<li id="cat1" class="hidden catfade"><img src="SampleSumo_logo_no_text_transparent_100x100.png"/></li>
+			<li id="cat2" class="hidden catfade"><img src="SampleSumo_logo_no_text_transparent_100x100.png"/></li>
+			<li id="cat3" class="hidden catfade"><img src="SampleSumo_logo_no_text_transparent_100x100.png"/></li>
+			<li id="cat4" class="hidden catfade"><img src="SampleSumo_logo_no_text_transparent_100x100.png"/></li>		
+		</ul>
+		<img id="category_button" src="http://placehold.it/100x100"/>
+	</div> -->
+
+	<div class="category_button">
+		<ul id="cat_items" style="padding-left: 0; margin-left: 0">
+			<li id="cat1" class="hidden catfade"><img src="http://placehold.it/70x70"/></li>
+			<li id="cat2" class="hidden catfade"><img src="http://placehold.it/70x70"/></li>
+			<li id="cat3" class="hidden catfade"><img src="http://placehold.it/70x70"/></li>
+			<li id="cat4" class="hidden catfade"><img src="http://placehold.it/70x70"/></li>		
+		</ul>
+		<img id="category_button" src="http://placehold.it/70x70"/>
+	</div>
+
+	</div>
+
+
+	<script type="text/javascript">
+
+$(".category_button").click(function(){
+	console.log('clicked');
+	$("li").toggle("slow");
+});
+
+</script>
+
+
+</html>
