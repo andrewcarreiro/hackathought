@@ -1,0 +1,26 @@
+/* List Group Styles */
+div {
+  font-size: 1em !important;
+}
+
+.info_details {
+  display: block;
+  padding: 0.5em;
+  background-color: #fff;
+}
+
+.info_details label {
+  display: block;
+}
+
+div.ui-accordion-content {
+  padding: 0.5em !important;;
+}
+
+div.hrsOperation tr td, div.hrsOperation th {
+  font-size: 1em;
+}
+
+div.ui-accordion-header {
+
+}
