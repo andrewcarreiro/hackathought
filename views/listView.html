@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<script src = "../assets/js/dependencies/jquery.min.js"></script>
+<script src = "../assets/js/dependencies/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../assets/styles/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../assets/styles/listView.css">
+
+<script>
+  (function() {
+
+    var PATH = '../assets/data/';
+    //importJson();
+
+    var data = [{
+    "City": "Brampton",
+    "Public Name": "Peel Family Mediation Services And Parent Education Program",
+    "EMAIL": "",
+    "Website": "http://peelfamilymediation.org/",
+    "#": "2737",
+    "CAMH_UID": "1207",
+    "FIRST NAME": "",
+    "Address 1": "7755 hurontario street, room 250",
+    "INCIDENT TITLE": "Peel Family Mediation Services And Parent Education Program",
+    "Address 2": "",
+    "APPROVED": "YES",
+    "Phone": "905 456-4700 x5662",
+    "LOCATION": "7755 Hurontario Street, Room 250, Brampton, L6W 4T1",
+    "Other Requirements": "Other Languages Spoken",
+    "Parent Agency": "Peel Family Mediation Services And Parent Education Program",
+    "School": "",
+    "Hours and Availability": "",
+    "LONGITUDE": "-79.727383",
+    "Hours of Operation": "Mon 8:30am-4:30pm; Tue 8:30am-4:30pm; Wed 8:30am-4:30pm; Thu 8:30am-4:30pm; Fri 8:30am-4:30pm; ",
+    "Postal Code": "L6w 4t1",
+    "CATEGORY": "Family and Friends, Legal and Financial, ",
+    "Community Services": "",
+    "VERIFIED": "NO",
+    "DESCRIPTION": "Peel Family Mediation Services And Parent Education Program",
+    "Fees and Accessibility": "",
+    "LAST NAME": "",
+    "INCIDENT DATE": "2014-07-25 00:00:00",
+    "LATITUDE": "43.661984"
+  },
+  {
+    "City": "Mississauga",
+    "Public Name": "Peel Partners for a Drug-Free Community",
+    "EMAIL": "",
+    "Website": "",
+    "#": "2738",
+    "CAMH_UID": "1208",
+    "FIRST NAME": "",
+    "Address 1": "120 Traders Boulevard East",
+    "INCIDENT TITLE": "Peel Partners for a Drug-Free Community",
+    "Address 2": "Unit 101",
+    "APPROVED": "YES",
+    "Phone": "",
+    "LOCATION": "120 Traders Boulevard East, Unit 101, Mississauga, L4Z 2H7",
+    "Other Requirements": "Other Languages Spoken",
+    "Parent Agency": "Peel Partners for a Drug-Free Community",
+    "School": "",
+    "Hours and Availability": "",
+    "LONGITUDE": "-79.667826",
+    "Hours of Operation": "",
+    "Postal Code": "L4Z 2H7",
+    "CATEGORY": "Health and Social Services, ",
+    "Community Services": "Family Services",
+    "VERIFIED": "NO",
+    "DESCRIPTION": "Peel Partners for a Drug-Free Community",
+    "Fees and Accessibility": "",
+    "LAST NAME": "",
+    "INCIDENT DATE": "2014-08-15 00:00:00",
+    "LATITUDE": "43.62768"
+  },
+  {
+    "City": "Mississauga",
+    "Public Name": "Peel Youth Centre",
+    "EMAIL": "",
+    "Website": "Http://www.peelregion.ca/ow/ourservices/community-program/housing/pyv/live/",
+    "#": "2739",
+    "CAMH_UID": "1209",
+    "FIRST NAME": "",
+    "Address 1": "99 acorn place",
+    "INCIDENT TITLE": "Peel Youth Centre",
+    "Address 2": "",
+    "APPROVED": "YES",
+    "Phone": "905 791-5576",
+    "LOCATION": "99 Acorn Place, Mississauga, L4Z 4E2",
+    "Other Requirements": "",
+    "Parent Agency": "Peel Youth Centre",
+    "School": "",
+    "Hours and Availability": "",
+    "LONGITUDE": "-79.64529",
+    "Hours of Operation": "Mon 11:00am-9:00pm; Tues 10:00am-9:00pm; Wed 10:00am-9:00pm; Thur 10:00am-9:00pm; Fri 10:00am-6:00pm; Sat 11:00am-5:00pm",
+    "Postal Code": "L4z 4e2",
+    "CATEGORY": "Health and Social Services, ",
+    "Community Services": "Family Services",
+    "VERIFIED": "NO",
+    "DESCRIPTION": "Peel Youth Centre",
+    "Fees and Accessibility": "Accepting New Clients,Extended hours",
+    "LAST NAME": "",
+    "INCIDENT DATE": "2014-07-25 00:00:00",
+    "LATITUDE": "43.604799"
+  }];
+
+    window.onload = function() {
+      //makeList();
+    };
+    // load lists
+    function importJson() {
+      console.log("Importing json " + PATH);
+      $.getJSON( PATH + "sample.json", function( data ) {
+        console.log("importing");
+        //if(window.thoughtSpots === undefined)
+        //window.thoughtSpots = data;
+
+        MAX_ENTRIES = data.length;
+
+        // data.forEach( function(location) {
+
+        // });
+        makeList();
+      });
+   }
+   function makeList() {
+   //  for(var i = 0; i < 5; i++) {
+   //   var listHeading = $('<h1><a>Menu</a></h1>');
+   //   console.log(listHeading);
+   //   $('#accordion').append(listHeading);
+   // }
+   var mainDiv = $('#accordion');
+   data.forEach(function(location) {
+    var listHeading = $('<h1><a>' + location['Public Name'] + '</a></h1>');
+    var list_content = $('<div class="list_content">
+
+    </div>');
+    mainDiv.append(listHeading);
+
+   });
+   // $('<div id="">
+   //    <label></label>
+   //    <div class="list_content">
+
+   //    </div>
+   //  </div>')
+   }
+  })();
+</script>
+  <h1> List View </h1>
+    <div id="accordion">
+  <h1><a>Peel Counselling And Consulting Services</a></h1>
+    <div id="">
+      <!-- <label></label> -->
+      <div class="list_content">
+        <div class="info_details">
+          <label class="address1">6535 millcreek drive</label>
+          <label class="address2"></label>
+          <label class="postalCode">M13 4R5</label>
+        </div>
+        <div class="hrsOperation">
+          <table class="table table-hover">
+          <tr>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thur</th>
+            <th>Fri</th>
+          </tr>
+            <tr>
+              <td>8:30am - 6:00pm</td>
+              <td>8:30am - 6:00pm</td>
+              <td>8:30am - 6:00pm</td>
+              <td>8:30am - 6:00pm</td>
+              <td>8:30am - 6:00pm</td>
+            </tr>
+          </table>
+        </div>
+        <a href="">Visit their site</a>
+        <a href="">Email</a>
+      </div>
+    </div>
+
+
+  </div>
+  <!-- <h1><a>Menu 2</a></h1>
+  <div>Menu Contents 2</div>
+  <h1><a>Menu 3</a></h1>
+  <div>Menu Contents 3</div> -->
+</div>
+<script>
+
+$("#accordion").accordion ().accordion ("option","active", 0);
+
+//("option", "active", 1)
+
+// $('#accordion div').click(function() {
+//   $( this ).toggle( "up" );
+// });
+
+// $('#accordion h1 a').click(function() {
+//   $('#accordion div').toggle( "down" );
+// });
+
+
+</script>

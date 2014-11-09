@@ -43,14 +43,20 @@ var MapParser = function(mapid, data) {
       },
       // center: new google.maps.LatLng(43.653921, -79.373217)
       zoom: DEFAULT_ZOOM_LVL,
+      zoomControlOptions: {
+        style: google.maps.ZoomControlStyle.LARGE,
+        position: google.maps.ControlPosition.RIGHT_BOTTOM
+      },
       // panControl: true,
       // zoomControl: true,
       // mapTypeControl: true,
       // scaleControl: true,
       // streetViewControl: true,
       // overviewMapControl: true
-      styles:styleArray
+      //styles:styleArray
     };
+
+
     //googleMap.setOptions({styles: styleArray});
     //console.log(this);
 
@@ -77,27 +83,21 @@ var MapParser = function(mapid, data) {
     var regEx = new RegExp('.*' + title + '.*');
     catergory  = catergory || 'City'; // Set default category just in case
 
+    mapRef.resetMapMarkers();
 
-    console.log("Markers",mapRef.markers.length);
-    console.log("Cities Numbers: ", thoughtSpots.length);
-    //mapRef.clearAll();
-    if(!thoughtSpots.some(function(value) {
-      title.trim();
-      return value[catergory].match(title);
-    }))
-      return 0; // No Matching keyword, return early
 
-    thoughtSpots = thoughtSpots.filter(function(val, index, arr) {
-      val[catergory].trim();
-      val['#'].trim();
+    thoughtSpots.filter(function(val, index, arr) {
+      //val[catergory].trim();
+      //val['#'].trim();
 
       if(val[catergory].match(regEx) === null) {
+        //console.log(mapRef.markers[index]);
         mapRef.markers[index].setMap(null);
       }
       else {
         if(!firstEntrySet) {
-          googleMap.setCenter(mapRef.markers[index].getPosition());
-          googleMap.setZoom(DEFAULT_ZOOM_LVL - 3);
+          //googleMap.setCenter(mapRef.markers[index].getPosition());
+          //googleMap.setZoom(DEFAULT_ZOOM_LVL - 3);
           firstEntrySet = true;
         }
         return val;
@@ -109,10 +109,12 @@ var MapParser = function(mapid, data) {
   // Search entries
   this.searchEntries = function(term, category) {
     var mapRef = this;
-    term.trim();
+    term = term && term.trim();
+    if(!term) return 0;
     var regEx = new RegExp('.*' + term + '.*');
 
-    if(!category) category = 'Public Name';
+    console.log("SEARCHING");
+        if(!category) category = 'Public Name';
 
     console.log("term",term);
 
@@ -147,7 +149,7 @@ var MapParser = function(mapid, data) {
   this.resetMapMarkers = function() {
     var mapRef = this;
 
-
+    console.log("Calling reset");
     for (var i = 0; i < mapRef.markers.length; i++) {
       if(mapRef.markers[i])
         mapRef.markers[i].setMap(googleMap);
@@ -156,6 +158,7 @@ var MapParser = function(mapid, data) {
 
   // Clear all markers from Map only, not array
   this.clearAll = function() {
+    console.log("Calling clearAll");
     var mapRef = this;
     for (var i = 0; i < mapRef.markers.length; i++) {
       if(mapRef.markers[i])
@@ -169,17 +172,18 @@ var MapParser = function(mapid, data) {
     console.log("calling import");
     var mapRef = this;
 
-    $.getJSON( PATH + "sample.json", function( data ) {
+    //$.getJSON( PATH + "thoughtSpots.json", function( data ) {
       //if(window.thoughtSpots === undefined)
-      window.thoughtSpots = data;
+      window.thoughtSpots = DATA_ARR;
 
-      MAX_ENTRIES = data.length;
+      MAX_ENTRIES = thoughtSpots.length;
 
-      data.forEach( function(location) {
+      thoughtSpots.forEach( function(location) {
 
         var marker = new google.maps.Marker({
           map: this.googleMap,
-          draggable: true,
+          draggable: false,
+
           position: new google.maps.LatLng(location.LATITUDE, location.LONGITUDE)
         });
 
@@ -192,7 +196,12 @@ var MapParser = function(mapid, data) {
           googleMap.setCenter(marker.getPosition());
         });
       });
-    });
+    //});
+  };
+
+  this.styledIcon = function() {
+    //var styleIconClass =
+    return new StyledIcon(StyledIconTypes.CLASS,{color:"#ff0000"});
   };
 
   // Can be used to sort arrays if querying gets too slow
@@ -227,8 +236,8 @@ window.centerMapToUser = function(locObj) {
       // mp.markers.push(marker);
 
       //console.log("CENTER:" + mp.markers);
-      googleMap.setCenter(mp.markers[1].getPosition());
-      //googleMap.setCenter(initialLocation);
+      //googleMap.setCenter(mp.markers[1].getPosition());
+      googleMap.setCenter(initialLocation);
     });
 
     mp.importJson();
@@ -272,14 +281,15 @@ $(window).load(function() {
   //   }
   // });
 
-  $('#searchBtn').click(function() {
+  $('#locSearchBtn').click(function() {
+    console.log("PRessing");
     var term = $('#searchBox').val();
     mp.searchEntries(term);
   });
 
   $('#filterBtn').click(function() {
     var term = $('#searchBox').val();
-    mp.limitBy(term, 'City');
+    mp.limitBy(term, 'CATEGORY');
   });
 
   $('#resetMapBtn').click(function() {
@@ -287,18 +297,4 @@ $(window).load(function() {
   });
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
