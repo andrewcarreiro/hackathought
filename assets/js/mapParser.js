@@ -35,6 +35,7 @@ var MapParser = function(mapid, data) {
   //   /*43.7000° N, 79.4000° W
   //   */
     var mapRef = this;
+    var styleArray = setStyles();
     var mapOptions = {
       center: {
         lat: 43.653921,
@@ -48,8 +49,10 @@ var MapParser = function(mapid, data) {
       // scaleControl: true,
       // streetViewControl: true,
       // overviewMapControl: true
+      styles:styleArray
     };
-    console.log(this);
+    //googleMap.setOptions({styles: styleArray});
+    //console.log(this);
 
     // sets Map reference to Global variable
     window.googleMap = new google.maps.Map(document.getElementById(mapid),
@@ -202,6 +205,8 @@ var MapParser = function(mapid, data) {
     });
 
   };
+
+
 };
 
 
@@ -222,13 +227,41 @@ window.centerMapToUser = function(locObj) {
       // mp.markers.push(marker);
 
       //console.log("CENTER:" + mp.markers);
-      //googleMap.setCenter(mp.markers[1].getPosition());
-      googleMap.setCenter(initialLocation);
+      googleMap.setCenter(mp.markers[1].getPosition());
+      //googleMap.setCenter(initialLocation);
     });
 
     mp.importJson();
 
 };
+
+function setStyles() {
+    var styleArray = [{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"water","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#C6E2FF"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#C5E3BF"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#D1D1B8"}]}];
+    // [
+    //   {
+    //     featureType: "all",
+    //     stylers: [
+    //       {hue: "#075AFF"},
+    //       { saturation: -80 }
+
+    //     ]
+    //   },{
+    //     featureType: "road.arterial",
+    //     elementType: "geometry",
+    //     stylers: [
+    //       { hue: "#075AFF" },
+    //       { saturation: 70 }
+    //     ]
+    //   },{
+    //     featureType: "poi.business",
+    //     elementType: "labels",
+    //     stylers: [
+    //       { visibility: "off" }
+    //     ]
+    //   }
+    // ];
+    return styleArray;
+}
 
 $(window).load(function() {
   // Might think of including dynamic autocomplete later if time permits
