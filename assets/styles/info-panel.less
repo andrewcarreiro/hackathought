@@ -33,20 +33,12 @@
 	.top{
 		h2,h3{margin:0px;}
 		h2{font-size:16px; margin-bottom:10px;}
-		h3{font-size:10px;padding-left:10px;}
+		h3{font-size:10px;padding-left:15px;}
 		box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
 		height:100px;
 		top:-100px;
 		z-index:1;
 		color:#FFF;
-
-		&.culture{background-color:@culture-colour;}
-		&.family{background-color:@family-colour;}
-		&.health{background-color:@health-colour;}
-		&.legal{background-color:@legal-colour;}
-		&.relationships{background-color:@relationships-colour;}
-		&.spirituality{background-color:@spirituality-colour;}
-		&.work{background-color:@work-colour;}
 
 		.header-image{
 			background-color:#FFF;
@@ -59,12 +51,16 @@
 		}
 
 		.header-content{
-			display: table-cell;
 			height:100px;
-			vertical-align: middle;
 			padding-left:100px;
+			padding-right:15px;
 			width:100%;
 			box-sizing: border-box;
+			>div {
+				display: table-cell;
+				vertical-align: middle;
+				height:100px;
+			}
 		}
 	}
 	&.active .top{top:0px;}
@@ -86,7 +82,7 @@
 	.closer{
 		height:150px;
 		font-size:20px;
-		padding:10px;
+		padding:15px;
 		box-sizing: border-box;
 		>div{
 			margin-bottom:3px;
@@ -97,10 +93,31 @@
 		}
 	}
 
+	.closem{
+		border:none;
+		border-radius:100%;
+		background:@textgrey;
+		box-shadow:0px 0px 10px 0px rgba(0,0,0,0.5);
+		display:block;
+		position:absolute;
+		bottom:15px;
+		height:50px;
+		width:50px;
+		z-index:2;
+		right:-80px;
+		transition:300ms right ease-in-out 0ms;
+		-webkit-transition:300ms right ease-in-out 0ms;
+	}
+	&.active .closem{
+		right:15px;
+		transition-delay:300ms;
+		-webkit-transition-delay:300ms;
+	}
+
 	.bottom{
 		box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
 		box-sizing: border-box;
-		padding:25px 10px;
+		padding:25px 15px;
 		color:@textgrey;
 		h3{
 			color:@textblack;
@@ -114,11 +131,46 @@
 		}
 
 		section{
+			margin-bottom:1em;
 			&.hours{
 				.copy{
 					.column(2);
 				}
 			}
+			&.links{
+				text-align: center;
+				strong{ display:block; }
+				a{display:block;padding:20px 0px;color:#FFF;}
+			}
 		}
 	}
 }
+
+.culture .normal{background-color:@culture-colour;}
+.culture .darker{background-color:darken(@culture-colour,5%);}
+.culture .lighter{background-color:lighten(@culture-colour,5%);}
+
+.family .normal{background-color:@family-colour;}
+.family .darker{background-color:darken(@family-colour,5%);}
+.family .lighter{background-color:lighten(@family-colour,5%);}
+
+.health .normal{background-color:@health-colour;}
+.health .darker{background-color:darken(@health-colour,5%);}
+.health .lighter{background-color:lighten(@health-colour,5%);}
+
+.legal .normal{background-color:@legal-colour;}
+.legal .darker{background-color:darken(@legal-colour,5%);}
+.legal .lighter{background-color:lighten(@legal-colour,5%);}
+
+.relationships .normal{background-color:@relationships-colour;}
+.relationships .darker{background-color:darken(@relationships-colour,5%);}
+.relationships .lighter{background-color:lighten(@relationships-colour,5%);}
+
+.spirituality .normal{background-color:@spirituality-colour;}
+.spirituality .darker{background-color:darken(@spirituality-colour,5%);}
+.spirituality .lighter{background-color:lighten(@spirituality-colour,5%);}
+
+.work .normal{background-color:@work-colour;}
+.work .darker{background-color:darken(@work-colour,5%);}
+.work .lighter{background-color:lighten(@work-colour,5%);}
+

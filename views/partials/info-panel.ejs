@@ -11,20 +11,23 @@
 	});
 </script>
 <script id="info-panel-template" type="text/x-handlebars-template">
-	<div>
-		<div class="top culture">
+	<div class="<?= d['classes'][0] ?>">
+		<div class="top normal">
 			<div class="header-image"></div>
 			<div class="header-content">
-				<h2><?= d["Public Name"] ?></h2>
-				<h3>
-					<?= d["Address 1"]+"<br/>" ?>
-					<? if (d["Address 2"]) { ?>
-						<?= d["Address 2"]+"<br/>" ?>
-					<? } ?>
-					<?= d["City"] ?><? if(d["City"] && d["Postal Code"]){ ?>,<? } ?> <?= d["Postal Code"] ?>
-				</h3>
+				<div>
+					<h2><?= d["Public Name"] ?></h2>
+					<h3>
+						<?= d["Address 1"]+"<br/>" ?>
+						<? if (d["Address 2"]) { ?>
+							<?= d["Address 2"]+"<br/>" ?>
+						<? } ?>
+						<?= d["City"] ?><? if(d["City"] && d["Postal Code"]){ ?>,<? } ?> <?= d["Postal Code"] ?>
+					</h3>
+				</div>
 			</div>
 		</div>
+		<button class="closem"></button>
 		<div class="content">
 			<div>
 				<div>
@@ -54,6 +57,24 @@
 									<?
 										});
 									?>
+								</div>
+							</section>
+						<? } ?>
+
+
+						<? if ( d["Website"] && d["Phone"] ) { ?>
+							<section class="links row">
+								<div class="col-xs-6 darker">
+									<a href="<?= d['Website'] ?>" target="_blank">
+										<strong>Visit Website</strong>
+										<?= d["Website"].replace("http://",'') ?>
+									</a>
+								</div>
+								<div class="col-xs-6 lighter">
+									<a href="tel:<?= d['Phone'] ?>" target="_blank">
+										<strong>Call Now</strong>
+										<?= d["Phone"] ?>
+									</a>
 								</div>
 							</section>
 						<? } ?>
