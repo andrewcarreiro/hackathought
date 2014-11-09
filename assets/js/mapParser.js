@@ -34,8 +34,8 @@ var MapParser = function(mapid, data) {
   this.initialize = function() {
   //   /*43.7000° N, 79.4000° W
   //   */
-
-  var mapOptions = {
+    var mapRef = this;
+    var mapOptions = {
       center: {
         lat: 43.653921,
         lng: -79.373217
@@ -49,12 +49,15 @@ var MapParser = function(mapid, data) {
       // streetViewControl: true,
       // overviewMapControl: true
     };
+    console.log(this);
 
     // sets Map reference to Global variable
     window.googleMap = new google.maps.Map(document.getElementById(mapid),
         mapOptions);
 
+    // center the map to user's view, then will call import JSON file
     centerMapToUser(googleMap);
+
   };
 
   // Markers reference, we use this to remove or set the markers currently on
@@ -92,7 +95,6 @@ var MapParser = function(mapid, data) {
         if(!firstEntrySet) {
           googleMap.setCenter(mapRef.markers[index].getPosition());
           googleMap.setZoom(DEFAULT_ZOOM_LVL - 3);
-          mapRef.toggleBounce(index);
           firstEntrySet = true;
         }
         return val;
@@ -173,7 +175,7 @@ var MapParser = function(mapid, data) {
       data.forEach( function(location) {
 
         var marker = new google.maps.Marker({
-          map: googleMap,
+          map: this.googleMap,
           draggable: true,
           position: new google.maps.LatLng(location.LATITUDE, location.LONGITUDE)
         });
@@ -204,6 +206,8 @@ var MapParser = function(mapid, data) {
 
 
 // Centers the map to user's current location when loaded initially
+// This function call importJson(), since we want to call this after map
+// finished displaying
 window.centerMapToUser = function(locObj) {
     //var mapRef = obj;
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -218,9 +222,11 @@ window.centerMapToUser = function(locObj) {
       // mp.markers.push(marker);
 
       //console.log("CENTER:" + mp.markers);
-      googleMap.setCenter(mp.markers[1].getPosition());
-      //googleMap.setCenter(initialLocation);
+      //googleMap.setCenter(mp.markers[1].getPosition());
+      googleMap.setCenter(initialLocation);
     });
+
+    mp.importJson();
 
 };
 
