@@ -18,6 +18,7 @@
 				<div>
 					<h2><?= d["Public Name"] ?></h2>
 					<h3>
+						<span class="icon-location"></span>
 						<?= d["Address 1"]+"<br/>" ?>
 						<? if (d["Address 2"]) { ?>
 							<?= d["Address 2"]+"<br/>" ?>
@@ -83,7 +84,11 @@
 							<section class="moreinfo">
 								<h3><span class="icon-dots"></span>More Information</h3>
 								<div class="copy">
-									:)
+									<ul>
+									<? d["tags"].forEach(function(el) { ?>
+										<li><?= el ?></li>
+									<? }); ?>
+									</ul>
 								</div>
 							</section>
 						<? } ?>

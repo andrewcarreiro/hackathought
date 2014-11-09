@@ -16,9 +16,29 @@ ThoughtSpotter = {
 						classes = classes.replace("Legal and Financial","legal");
 						classes = classes.split(", ");
 						thoughtSpots[i].classes = classes;
+
+						var tags = [];
+						tags = tags.concat( thoughtSpots[i]["Other Requirements"]);
+						tags = tags.concat( thoughtSpots[i]["Hours and Availability"]);
+						tags = tags.concat( thoughtSpots[i]["Community Services"]);
+						tags = tags.concat( thoughtSpots[i]["Fees and Accessibility"]);
+
+						thoughtSpots[i].tags = tags;
+						tags.clean("");
+
 					return thoughtSpots[i];
 				}
 			}
 		}
 	}
 }
+
+Array.prototype.clean = function(deleteValue) {
+	for (var i = 0; i < this.length; i++) {
+		if (this[i] == deleteValue) {
+			this.splice(i, 1);
+			i--;
+		}
+	}
+	return this;
+};
