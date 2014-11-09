@@ -13,7 +13,13 @@ $(document).ready(function() {
 
 	// Category button
 	$(".category_expansion").click(function(){
-		alert('ya ');
 		$("#cat_items").toggleClass('active');
+	});
+
+	$("#cat_items").find('li').each(function(i,ele) {
+		$(ele).on('click', function() {
+			mp.limitBy($(ele).attr('data-cat'), 'CATEGORY');
+			$("#cat_items").toggleClass('active');
+		});
 	});
 });

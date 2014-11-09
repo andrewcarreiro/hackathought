@@ -66,6 +66,7 @@ var MapParser = function(mapid, data) {
 
     // center the map to user's view, then will call import JSON file
     centerMapToUser(googleMap);
+    mp.importJson();
 
   };
 
@@ -239,8 +240,6 @@ window.centerMapToUser = function(locObj) {
       //googleMap.setCenter(mp.markers[1].getPosition());
       googleMap.setCenter(initialLocation);
     });
-
-    mp.importJson();
 
 };
 

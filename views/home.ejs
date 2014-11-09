@@ -13,7 +13,7 @@
 
 <div class="main-control">
 	<div class="inner">
-		<div onclick="centerHere()" class="icon-target"></div>
+		<div onclick="centerMapToUser(googleMap)" class="icon-target"></div>
 		<div class="fancy_search" id="fancy_search">
 			<span class="icon-search"></span>
 			<span class="searchtext">Tap To Seach</span>
@@ -34,13 +34,13 @@
 </div>
 <div id="cat_items" class="cat_items">
 	<ul>
-		<li>Legal and Financial<span class="icon-legal"></span></li>
-		<li>Health and Social Services<span class="icon-health"></span></li>
-		<li>Recreation and Culture<span class="icon-culture"></span></li>
-		<li>Family and Friends<span class="icon-family"></span></li>
-		<li>Spirituality and Wellbeing<span class="icon-spirituality"></span></li>
-		<li>Work and School<span class="icon-work"></span></li>
-		<li>Sex and Relationships<span class="icon-sexual-health"></span></li>
+		<li data-cat="Legal and Financial">Legal and Financial<span class="icon-legal"></span></li>
+		<li data-cat="Health and Social Services">Health and Social Services<span class="icon-health"></span></li>
+		<li data-cat="Recreation and Culture">Recreation and Culture<span class="icon-culture"></span></li>
+		<li data-cat="Family and Friends">Family and Friends<span class="icon-family"></span></li>
+		<li data-cat="Spirituality and Wellbeing">Spirituality and Wellbeing<span class="icon-spirituality"></span></li>
+		<li data-cat="Work and School">Work and School<span class="icon-work"></span></li>
+		<li data-cat="Sex and Relationships">Sex and Relationships<span class="icon-sexual-health"></span></li>
 	</ul>
 </div>
 
@@ -60,11 +60,6 @@
 var my_important_json = {'json' : 'cool'};
 var mp = new MapParser('map',my_important_json);
 var thoughtSpots = [];
-
-function centerHere() {
-  // Centers the position to current user location
-  mp.centerMapToUser();
-}
 
 
 //mp.importJson();
