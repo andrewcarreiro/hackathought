@@ -49,8 +49,7 @@ InfoPanel.prototype.close = function() {
 
 
 InfoPanel.prototype.fillPanel = function(id) {
-	var reducedData = ThoughtSpotter.get(id);
-
+	var reducedData = ThoughtSpotter.get(Number(id));
 	var html = _.template(this.template,{d:reducedData});
 
 	$(this.element).html(html);

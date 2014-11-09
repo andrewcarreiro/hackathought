@@ -195,6 +195,7 @@ var MapParser = function(mapid, data) {
         google.maps.event.addListener(marker, 'dblclick', function() {
           googleMap.setZoom(DEFAULT_ZOOM_LVL);
           googleMap.setCenter(marker.getPosition());
+          infopanel.load(marker.locMarkerId);
         });
       });
     //});

@@ -2,11 +2,11 @@
 ThoughtSpotter = {
 	get : function(arg) {
 		if ( typeof(arg) == 'undefined' ) {
-			return thoughtSpots;
+			return DATA_ARR;
 		}else if ( typeof(arg) == 'number' ) {
-			for (var i=0; i<thoughtSpots.length; i++) {
-				if ( thoughtSpots[i]["#"] == arg ) {
-						var classes = thoughtSpots[i]["CATEGORY"];
+			for (var i=0; i<DATA_ARR.length; i++) {
+				if ( DATA_ARR[i]["#"] == arg ) {
+						var classes = DATA_ARR[i]["CATEGORY"];
 						classes = classes.replace("Health and Social Services","health");
 						classes = classes.replace("Recreation and Culture","culture");
 						classes = classes.replace("Spirituality and Wellbeing","spirituality");
@@ -15,19 +15,19 @@ ThoughtSpotter = {
 						classes = classes.replace("Sex and Relationships","relationships");
 						classes = classes.replace("Legal and Financial","legal");
 						classes = classes.split(", ");
-						thoughtSpots[i].classes = classes;
+						DATA_ARR[i].classes = classes;
 						classes.clean("");
 
 						var tags = [];
-						tags = tags.concat( thoughtSpots[i]["Other Requirements"]);
-						tags = tags.concat( thoughtSpots[i]["Hours and Availability"]);
-						tags = tags.concat( thoughtSpots[i]["Community Services"]);
-						tags = tags.concat( thoughtSpots[i]["Fees and Accessibility"]);
+						tags = tags.concat( DATA_ARR[i]["Other Requirements"]);
+						tags = tags.concat( DATA_ARR[i]["Hours and Availability"]);
+						tags = tags.concat( DATA_ARR[i]["Community Services"]);
+						tags = tags.concat( DATA_ARR[i]["Fees and Accessibility"]);
 
-						thoughtSpots[i].tags = tags;
+						DATA_ARR[i].tags = tags;
 						tags.clean("");
 
-					return thoughtSpots[i];
+					return DATA_ARR[i];
 				}
 			}
 		}
