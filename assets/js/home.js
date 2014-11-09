@@ -13,6 +13,7 @@ $(document).ready(function() {
 
 	// Category button
 	$(".category_expansion").click(function(){
+		alert('ya ');
 		$("#cat_items").toggleClass('active');
 	});
 });
