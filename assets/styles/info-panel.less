@@ -16,6 +16,7 @@
 	height:100%;
 	display:none;
 	overflow: hidden;
+	z-index:1;
 	&.primer{display:block;}
 
 	.top,.content{
@@ -35,7 +36,7 @@
 		h2{
 			font-size:16px;
 			margin-bottom:10px;
-			height:2em;
+			height:2.5em;
 			overflow:hidden;
 		}
 		h3{
@@ -179,14 +180,19 @@
 				margin-bottom: -30px;
 				position: relative;
 				z-index: 1;
+				overflow-wrap: break-word;
+				overflow:hidden;
 				strong{ display:block; }
 				a{display:block;padding:20px 0px;color:#FFF;}
+				>div{
+					height: 80px;
+				}
 			}
 
 			&.comments{
 				background: #A2A2A2;
 				color: #231F20;
-				padding: 10px;
+				padding: 15px 25px;
 				margin: 30px -15px 0px -15px;
 				padding-bottom:60px;
 				h3{font-size:18px;padding:0px;}

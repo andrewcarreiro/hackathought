@@ -26,5 +26,10 @@ $(document).ready(function() {
 	$("#searchBox").on('change', function() {
 		console.log('search');
 		mp.searchEntries($(this).val(), 'Public Name');
-	})
+	});
+
+	//$("#map").click(function() {
+	//	$("#searchbox").blur();
+	//	$("#fancy_search").removeClass('active');
+	//});
 });

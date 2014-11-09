@@ -45,7 +45,7 @@ var MapParser = function(mapid, data) {
       zoom: DEFAULT_ZOOM_LVL,
       zoomControlOptions: {
         style: google.maps.ZoomControlStyle.LARGE,
-        position: google.maps.ControlPosition.RIGHT_BOTTOM
+        position: google.maps.ControlPosition.RIGHT_TOP
       },
       // panControl: true,
       // zoomControl: true,
