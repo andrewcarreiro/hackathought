@@ -1,9 +1,13 @@
 //mapParser.js
 // BAD: Never use Globals, except in hackathons!
 var PATH = "../data/";
+var MAX_ENTRIES = 0; // the number of thoughtSpots will be set later after JSON file is imported
+var DEFAULT_ZOOM_LVL = 15; // default zoom level, we can adjust as needed
 
+// Main Map object, most functionalities is self-contained and encapsulated, but
+// occasionally needs globals to perform special functionality
 var MapParser = function(mapid, data) {
-  this.googleMap = "";
+  this.googleMap = undefined;
   this.mapStyles = styles = [
     {
       stylers: [
@@ -26,12 +30,10 @@ var MapParser = function(mapid, data) {
     }
   ];
 
-  this.thoughtSpots = [];
-
+  // Initializes the map for the first time
   this.initialize = function() {
   //   /*43.7000° N, 79.4000° W
   //   */
-
 
   var mapOptions = {
       center: {
@@ -39,7 +41,7 @@ var MapParser = function(mapid, data) {
         lng: -79.373217
       },
       // center: new google.maps.LatLng(43.653921, -79.373217)
-      zoom: 15,
+      zoom: DEFAULT_ZOOM_LVL,
       // panControl: true,
       // zoomControl: true,
       // mapTypeControl: true,
@@ -48,66 +50,127 @@ var MapParser = function(mapid, data) {
       // overviewMapControl: true
     };
 
-    googleMap = new google.maps.Map(document.getElementById(mapid),
+    // sets Map reference to Global variable
+    window.googleMap = new google.maps.Map(document.getElementById(mapid),
         mapOptions);
 
     centerMapToUser(googleMap);
   };
 
+  // Markers reference, we use this to remove or set the markers currently on
+  // the map
   this.markers = [];
 
-  this.callSome = function() {
-    console.log(mapid);
-  };
-
-  this.limitByTitle = function(title) {
+  // Filter entries by limiting entries too
+  // alters Global thoughSpots array
+  this.limitBy = function(title, catergory) {
     var mapRef = this;
-    if(mapRef.markers.length > 0) {
-      console.log("Title: ", title);
-    }
+    var firstEntrySet = false; // a boolean flag that is set to show first entry from
+                          // the search results
+    title.trim();
+    var regEx = new RegExp('.*' + title + '.*');
+    catergory  = catergory || 'City'; // Set default category just in case
 
-    // if(thoughtSpots.length > 0) {
-    //   var spot = thoughtSpots[1];
-    //   console.log(spot);
-    //   console.log(spot["City"]);
-    // }
-    //for()
-    // for(var i = 0; i < thoughtSpots.length; i++) {
-    //   var spot = thoughtSpots[i];
-    //   console.log(spot);
-    //   if(spot['City'].match(title) !== null) {
-    //     mapRef.thoughtSpots.splice(i);
-    //   }
-    // }
-    thoughtSpots.forEach(function(val, index, arr) {
-      if(val['City'] == title)
-        arr.splice(index);
+
+    console.log("Markers",mapRef.markers.length);
+    console.log("Cities Numbers: ", thoughtSpots.length);
+    //mapRef.clearAll();
+    if(!thoughtSpots.some(function(value) {
+      title.trim();
+      return value[catergory].match(title);
+    }))
+      return 0; // No Matching keyword, return early
+
+    thoughtSpots = thoughtSpots.filter(function(val, index, arr) {
+      val[catergory].trim();
+      val['#'].trim();
+
+      if(val[catergory].match(regEx) === null) {
+        mapRef.markers[index].setMap(null);
+      }
+      else {
+        if(!firstEntrySet) {
+          googleMap.setCenter(mapRef.markers[index].getPosition());
+          googleMap.setZoom(DEFAULT_ZOOM_LVL - 3);
+          mapRef.toggleBounce(index);
+          firstEntrySet = true;
+        }
+        return val;
+      }
     });
-    console.log(thoughtSpots.length);
 
-
-    // mapRef.markers.forEach(function(value, index, arr) {
-    //   // if(mapRef.markers[index]['City'].match(title) !== null) {
-    //   //   mapRef.markers.splice(index);
-    //   // }
-    // });
-
-    //console.log("sddsa");
   };
 
-  this.checkJquery = function() {
-    console.log($('#map'));
+  // Search entries
+  this.searchEntries = function(term, category) {
+    var mapRef = this;
+    term.trim();
+    var regEx = new RegExp('.*' + term + '.*');
+
+    if(!category) category = 'Public Name';
+
+    console.log("term",term);
+
+    thoughtSpots.some(function(val, index, arr) {
+
+      if(val[category].match(regEx) !== null) {
+        googleMap.setCenter(mapRef.markers[index].getPosition());
+        googleMap.setZoom(DEFAULT_ZOOM_LVL);
+
+        mapRef.toggleBounce(index);
+
+        return true;
+      }
+
+    });
+
   };
 
-  this.importJson = function(obj) {
+  // Set bounce animation
+  this.toggleBounce = function(index) {
+    var mapRef = this;
+
+    mapRef.markers[index].setAnimation(google.maps.Animation.BOUNCE);
+
+    setTimeout(function () {
+        mapRef.markers[index].setAnimation(null);
+    }, 2100);
+
+  };
+
+  // Restore all markers
+  this.resetMapMarkers = function() {
+    var mapRef = this;
+
+
+    for (var i = 0; i < mapRef.markers.length; i++) {
+      if(mapRef.markers[i])
+        mapRef.markers[i].setMap(googleMap);
+    }
+  };
+
+  // Clear all markers from Map only, not array
+  this.clearAll = function() {
+    var mapRef = this;
+    for (var i = 0; i < mapRef.markers.length; i++) {
+      if(mapRef.markers[i])
+        mapRef.markers[i].setMap(null);
+    }
+  };
+
+  // Import JSON asynchoronously and set markers on map
+  // also sets click listeners
+  this.importJson = function() {
     console.log("calling import");
     var mapRef = this;
-    // $.getJSON( PATH + "thoughtSpots.json", function( data ) {
+
     $.getJSON( PATH + "sample.json", function( data ) {
-      //console.log("Size: ", data.length);
-      //console.log(data[0]);
+      //if(window.thoughtSpots === undefined)
+      window.thoughtSpots = data;
+
+      MAX_ENTRIES = data.length;
+
       data.forEach( function(location) {
-        //console.log(location);
 
         var marker = new google.maps.Marker({
           map: googleMap,
@@ -118,19 +181,16 @@ var MapParser = function(mapid, data) {
         marker.locMarkerId = location['#'];
 
         mapRef.markers.push(marker);
-        //mapRef.thoughtSpots.push(location);
 
         google.maps.event.addListener(marker, 'dblclick', function() {
-          googleMap.setZoom(14);
+          googleMap.setZoom(DEFAULT_ZOOM_LVL);
           googleMap.setCenter(marker.getPosition());
         });
-          //console.log(marker.getPosition());
-    });
-        mapRef.sortDateSets();
-
+      });
     });
   };
 
+  // Can be used to sort arrays if querying gets too slow
   this.sortDateSets = function() {
     var mapRef = this;
     mapRef.markers.sort(function(a,b) {
@@ -142,55 +202,49 @@ var MapParser = function(mapid, data) {
   };
 };
 
+
 // Centers the map to user's current location when loaded initially
 window.centerMapToUser = function(locObj) {
     //var mapRef = obj;
-    //console.log("MAP_REF:",mapRef);
     navigator.geolocation.getCurrentPosition(function (position) {
       var initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-      var marker = new google.maps.Marker({
-          map: locObj,
-          draggable: false,
-          position: initialLocation
-      });
-      //mapRef.markers.push(marker);
-      locObj.setCenter(initialLocation);
+      // var marker = new google.maps.Marker({
+      //     map: mp.googleMap,
+      //     draggable: false,
+      //     position: initialLocation
+      // });
+
+      // mp.markers.push(marker);
+
+      //console.log("CENTER:" + mp.markers);
+      googleMap.setCenter(mp.markers[1].getPosition());
+      //googleMap.setCenter(initialLocation);
     });
 
 };
 
-
-function submitSearch() {
-  var term = $('#searchBox').val();
-
-  // Public Name
-  // var publicName = "Public Name";
-  // mp.limitByTitle(term);
-  //mp.markers = [];
-  console.log("Spots", term);
-  mp.limitByTitle(term);
-
-}
-
 $(window).load(function() {
-  //console.log("SDf",document.getElementById('searchBoxTerm'));
-  $('#searchBox').keypress(function() {
-    var term = $(this).val();
-    if(term.length > 2) {
-      console.log("Term: " + term);
-      //mp.limitByTitle(term);
-    }
-    //mp.limitByTitle("dfds");
+  // Might think of including dynamic autocomplete later if time permits
+  // $('#searchBox').keypress(function() {
+  //   var term = $(this).val();
+  //   if(term.length > 2) {
+  //     console.log("Term: " + term);
+  //   }
+  // });
+
+  $('#searchBtn').click(function() {
+    var term = $('#searchBox').val();
+    mp.searchEntries(term);
   });
 
-  $.getJSON( PATH + "sample.json", function( data ) {
-      console.log("Size: ", data.length);
-      //console.log(data[0]);
-      window.thoughtSpots = data;
+  $('#filterBtn').click(function() {
+    var term = $('#searchBox').val();
+    mp.limitBy(term, 'City');
   });
-  thoughtSpots.sort(function(a,b) {
-    return a['#'] - b['#'];
+
+  $('#resetMapBtn').click(function() {
+    mp.resetMapMarkers();
   });
 
 });

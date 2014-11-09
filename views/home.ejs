@@ -11,9 +11,11 @@
   <button onclick="centerHere()">Click</button>
   <button id="info-panel-spawn">animate infopanel in</button>
 </div>
-<input type="submit" id="searchBtn" style="position: absolute; top: 15px; right: 50px;" onclick="submitSearch()"/>
 
-
+<input id="searchBox" type="input" style="position: absolute; top: 45px; right: 50px;"/>
+<input type="submit" id="searchBtn" style="position: absolute; top: 75px; right: 50px;" onclick=""/>
+<button id="resetMapBtn" style="position: absolute; top: 75px; right: 110px;">Reset</button>
+<button id="filterBtn" style="position: absolute; top: 75px; right: 155px;">Filter</button>
 
 
 <%- partial('partials/info-panel') %>
@@ -29,9 +31,9 @@ function centerHere() {
 }
 
 
-
 mp.importJson();
-mp.limitByTitle("Sdfsd");
+
+// Initializes google maps the moment window finishes loading
 google.maps.event.addDomListener(window, 'load', mp.initialize);
-//google.maps.event.addDomListener(window, 'load', mp.c);
+
 </script>
