@@ -10,49 +10,46 @@
 
 <div id="map" style="height: 100%; margin: 0; padding: 0; background:#222">map map</div>
 
-<div id="search" style="position: absolute; top: 15px; right: 50px;">
-  <button onclick="centerHere()">Click</button>
-  <button id="info-panel-spawn">animate infopanel in</button>
-</div>
 
-<!-- TODO: transition to using search bar below -->
-<div class="search2">
-	<form class="search-container" action="">
-		<input id="search-box" type="text" class="search-box" name="q" />
-		<label for="search-box"><span class="white-bg icon-search search-icon"></span></label>
-		<input type="submit" id="search-submit" onclick="submitSearch()"/>
-	</form>
-</div>
-
-<!-- adding temp menu below until I figure out how to get it working with divs and icons -->
-	<div class="category_button">
-		<ul id="cat_items" style="padding-left: 0; margin-left: 0">
-			<li id="cat1" class="hidden catfade"><img src="http://placehold.it/70x70"/></li>
-			<li id="cat2" class="hidden catfade"><img src="http://placehold.it/70x70"/></li>
-			<li id="cat3" class="hidden catfade"><img src="http://placehold.it/70x70"/></li>
-			<li id="cat4" class="hidden catfade"><img src="http://placehold.it/70x70"/></li>
-		</ul>
-		<img id="category_button" src="http://placehold.it/70x70"/>
+<div class="main-control">
+	<div class="inner">
+		<button onclick="centerHere()" class="icon-target"></button>
+		<div class="fancy_search" id="fancy_search">
+			<span class="icon-search"></span>
+			<span class="searchtext">Tap To Seach</span>
+			<input class="searchbox" id="searchBox" type="input"/>
+		</div>
+		<button class="category_expansion"></button>
 	</div>
 
-<!-- <div class="category_button">
-	<ul id="cat_items" style="padding-left: 0; margin-left: 0">
-		<li id="cat1" class="hidden catfade"><div class="icon caticon icon-culture">culture</div></li>
-		<li id="cat1" class="hidden catfade"><div class="icon caticon icon-family">family</div></li>
-		<li id="cat1" class="hidden catfade"><div class="icon caticon icon-health">health</div></li>
-		<li id="cat1" class="hidden catfade"><div class="icon caticon icon-legal">legal</div></li>
-		<li id="cat2" class="hidden catfade"><div class="icon caticon icon-relationships">relationships</div></li>
-		<li id="cat3" class="hidden catfade"><div class="icon caticon icon-spirituality">spirituality</div></li>
-		<li id="cat4" class="hidden catfade"><div class="icon caticon icon-work">work</div></li>
+	<!-- TODO: transition to using search bar below -->
+	<!--<div class="search2">
+		<form class="search-container" action="">
+			<input id="search-box" type="text" class="search-box" name="q" />
+			<label for="search-box"><span class="white-bg icon-search search-icon"></span></label>
+			<input type="submit" id="search-submit" onclick="submitSearch()"/>
+		</form>
+	</div>
+ -->
+</div>
+<div id="cat_items" class="cat_items">
+	<ul>
+		<li>Legal and Financial<span class="icon-legal"></span></li>
+		<li>Health and Social Services<span class="icon-health"></span></li>
+		<li>Recreation and Culture<span class="icon-culture"></span></li>
+		<li>Family and Friends<span class="icon-family"></span></li>
+		<li>Spirituality and Wellbeing<span class="icon-spirituality"></span></li>
+		<li>Work and School<span class="icon-work"></span></li>
+		<li>Sex and Relationships<span class="icon-sexual-health"></span></li>
 	</ul>
-	<img id="category_button" src="http://placehold.it/100x100"/>
-</div> -->
-
+</div>
 
 <input type="submit" id="searchBtn" style="position: absolute; top: 15px; right: 50px;" onclick="submitSearch()"/>
 
+
 <input id="searchBox" type="input" style="position: absolute; top: 45px; right: 50px;"/>
 <input type="submit" id="locSearchBtn" style="position: absolute; top: 75px; right: 50px;" onclick=""/>
+
 <button id="resetMapBtn" style="position: absolute; top: 75px; right: 110px;">Reset</button>
 <button id="filterBtn" style="position: absolute; top: 75px; right: 155px;">Filter</button>
 
@@ -75,11 +72,5 @@ function centerHere() {
 // Initializes google maps the moment window finishes loading
 google.maps.event.addDomListener(window, 'load', mp.initialize);
 
-
-// Category button
-//$(".category_button").click(function(){
-//	console.log('clicked');
-	//$("li").toggle("slow");
-//});
 
 </script>
