@@ -3,9 +3,6 @@ var InfoPanel = function(id,template_id) {
 	this.template = document.getElementById(template_id).innerHTML;
 	this.scroll = null;
 	var dis = this;
-	$(dis.element).find('.closer').on('click', function() {
-		dis.close();
-	});
 }
 
 InfoPanel.prototype.load = function(id) {
@@ -31,7 +28,10 @@ InfoPanel.prototype.open = function() {
 				click : true
 			}
 		);
-	},3001);
+	},301);
+	$(dis.element).find('.closer, .closem').on('click', function() {
+		dis.close();
+	});
 }
 
 InfoPanel.prototype.close = function() {
@@ -43,6 +43,7 @@ InfoPanel.prototype.close = function() {
 	$(dis.element).removeClass('active');
 	setTimeout(function(){
 		$(dis.element).removeClass('primer');
+		$(dis.element).children().remove();
 	},300);
 }
 
