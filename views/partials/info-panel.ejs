@@ -27,7 +27,7 @@
 				</div>
 			</div>
 		</div>
-		<button class="closem"></button>
+		<button class="closem icon-arrow-left"></button>
 		<div class="content">
 			<div>
 				<div>
@@ -39,7 +39,7 @@
 					<div class="bottom">
 						<? if ( d["DESCRIPTION"] ) { ?>
 							<section class="about">
-								<h3>About</h3>
+								<h3><span class="icon-about"></span>About</h3>
 								<div class="copy">
 									<?= d["DESCRIPTION"] ?>
 								</div>
@@ -47,7 +47,7 @@
 						<? } ?>
 						<? if ( d["Hours of Operation"] ) { ?>
 							<section class="hours">
-								<h3>Hours</h3>
+								<h3><span class="icon-hours"></span>Hours</h3>
 								<div class="copy">
 									<?
 										hours = d["Hours of Operation"].split("; ");
@@ -75,6 +75,15 @@
 										<strong>Call Now</strong>
 										<?= d["Phone"] ?>
 									</a>
+								</div>
+							</section>
+						<? } ?>
+
+						<? if ( true ) { ?>
+							<section class="moreinfo">
+								<h3><span class="icon-dots"></span>More Information</h3>
+								<div class="copy">
+									:)
 								</div>
 							</section>
 						<? } ?>

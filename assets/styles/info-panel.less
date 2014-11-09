@@ -107,6 +107,16 @@
 		right:-80px;
 		transition:300ms right ease-in-out 0ms;
 		-webkit-transition:300ms right ease-in-out 0ms;
+		color:#FFF;
+		font-size:30px;
+		line-height: 50px;
+		&:before{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			line-height: 52px;
+		}
 	}
 	&.active .closem{
 		right:15px;
@@ -132,6 +142,18 @@
 
 		section{
 			margin-bottom:1em;
+
+			h3{
+				[class^="icon-"], [class*=" icon-"] {
+					position:absolute;
+					margin-left: -19px;
+					margin-top: 2px;
+					&:before{
+						color:@textgrey;
+					}
+				}
+			}
+
 			&.hours{
 				.copy{
 					.column(2);
