@@ -1,36 +1,66 @@
 <div class="info-panel" id="info-panel">
-  <div>
-    <div class="top culture">
-      <div class="header-image"></div>
-      <h2>Place Name</h2>
-      <h3>123 Fake Street, Toronto, ON M6H 3W3</h3>
-      <div class="bot">
-        Useful for: {THING 1}
-      </div>
-    </div>
-    <div class="content">
-      <div>
-        <div class="closer"></div>
-        <div class="bottom">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+
 </div>
 <script>
-var infopanel = new InfoPanel("info-panel");
-$(document).ready(function(){
-  $("#info-panel-spawn").on('click', function(){
-    infopanel.open();
-  })
-});
+	var infopanel;
+	$(document).ready(function(){
+		infopanel = new InfoPanel("info-panel","info-panel-template");
+		$("#info-panel-spawn").on('click', function(){
+			infopanel.load(2743);
+		});
+	});
 </script>
-<script type="text/tmpl">
+<script id="info-panel-template" type="text/x-handlebars-template">
+	<div>
+		<div class="top culture">
+			<div class="header-image"></div>
+			<div class="header-content">
+				<h2><?= d["Public Name"] ?></h2>
+				<h3>
+					<?= d["Address 1"]+"<br/>" ?>
+					<? if (d["Address 2"]) { ?>
+						<?= d["Address 2"]+"<br/>" ?>
+					<? } ?>
+					<?= d["City"] ?><? if(d["City"] && d["Postal Code"]){ ?>,<? } ?> <?= d["Postal Code"] ?>
+				</h3>
+			</div>
+		</div>
+		<div class="content">
+			<div>
+				<div>
+					<div class="closer">
+						<div class="white-bg icon-culture"></div>
+						<div class="white-bg icon-family"></div>
+						<div class="white-bg icon-health"></div>
+					</div>
+					<div class="bottom">
+						<? if ( d["DESCRIPTION"] ) { ?>
+							<section class="about">
+								<h3>About</h3>
+								<div class="copy">
+									<?= d["DESCRIPTION"] ?>
+								</div>
+							</section>
+						<? } ?>
+						<? if ( d["Hours of Operation"] ) { ?>
+							<section class="hours">
+								<h3>Hours</h3>
+								<div class="copy">
+									<?
+										hours = d["Hours of Operation"].split("; ");
+										hours.forEach(function(el) {
+									?>
+											<?= el ?><br/>
+									<?
+										});
+									?>
+								</div>
+							</section>
+						<? } ?>
 
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </script>
