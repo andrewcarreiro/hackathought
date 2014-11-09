@@ -43,6 +43,10 @@ var MapParser = function(mapid, data) {
       },
       // center: new google.maps.LatLng(43.653921, -79.373217)
       zoom: DEFAULT_ZOOM_LVL,
+      zoomControlOptions: {
+        style: google.maps.ZoomControlStyle.LARGE,
+        position: google.maps.ControlPosition.RIGHT_BOTTOM
+      },
       // panControl: true,
       // zoomControl: true,
       // mapTypeControl: true,
@@ -51,6 +55,8 @@ var MapParser = function(mapid, data) {
       // overviewMapControl: true
       styles:styleArray
     };
+
+
     //googleMap.setOptions({styles: styleArray});
     //console.log(this);
 
@@ -180,6 +186,7 @@ var MapParser = function(mapid, data) {
         var marker = new google.maps.Marker({
           map: this.googleMap,
           draggable: true,
+          color: "#00FF00",
           position: new google.maps.LatLng(location.LATITUDE, location.LONGITUDE)
         });
 
@@ -193,6 +200,11 @@ var MapParser = function(mapid, data) {
         });
       });
     });
+  };
+
+  this.styledIcon = function() {
+    //var styleIconClass =
+    return new StyledIcon(StyledIconTypes.CLASS,{color:"#ff0000"});
   };
 
   // Can be used to sort arrays if querying gets too slow
